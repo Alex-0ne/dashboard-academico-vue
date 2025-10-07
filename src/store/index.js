@@ -2,27 +2,27 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    activeModule: 'consultas',
-    activeSubmodule: 'consulta-alumno'
-  },
-  getters: {
-    getActiveModule: (state) => state.activeModule,
-    getActiveSubmodule: (state) => state.activeSubmodule
+    activeModule: '',
+    activeSubmodule: ''
   },
   mutations: {
-    SET_ACTIVE_MODULE(state, module) {
+    setActiveModule(state, module) {
       state.activeModule = module
     },
-    SET_ACTIVE_SUBMODULE(state, submodule) {
+    setActiveSubmodule(state, submodule) {
       state.activeSubmodule = submodule
     }
   },
   actions: {
     changeModule({ commit }, module) {
-      commit('SET_ACTIVE_MODULE', module)
+      commit('setActiveModule', module)
     },
     changeSubmodule({ commit }, submodule) {
-      commit('SET_ACTIVE_SUBMODULE', submodule)
+      commit('setActiveSubmodule', submodule)
     }
+  },
+  getters: {
+    getActiveModule: (state) => state.activeModule,
+    getActiveSubmodule: (state) => state.activeSubmodule
   }
 })

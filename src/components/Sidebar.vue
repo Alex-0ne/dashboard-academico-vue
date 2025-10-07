@@ -85,7 +85,7 @@ export default {
     const router = useRouter()
 
     const consultasSubmenu = [
-    { id: 'consulta-alumno', name: 'Consultar por Alumno', route: '/consultas-alumno' },
+      { id: 'consulta-alumno', name: 'Consultar por Alumno', route: '/consultas-alumno' },
       { id: 'consulta-grupos', name: 'Consultar por Grupos', route: '/consultas-grupos' },
       { id: 'alumnos-grupo', name: 'Alumnos por Grupo', route: '/alumnos-grupo' },
       { id: 'resumen-grupos', name: 'Resumen de Grupos', route: '/resumen-grupos' }
@@ -94,7 +94,6 @@ export default {
     const operacionesSubmenu = [
       { id: 'inscripcion', name: 'Inscripción', route: '/inscripcion' },
       { id: 'adeudos', name: 'Adeudos', route: '/adeudos' },
-      { id: 'fusionar-grupos', name: 'Fusionar Grupos', route: '/fusionar-grupos' },
       { id: 'cambio-grupo-individual', name: 'Cambio de Grupo Individual', route: '/cambio-grupo-individual' },
       { id: 'fusionar-grupos', name: 'Fusionar Grupos', route: '/fusionar-grupos' },
       { id: 'captura-calificaciones', name: 'Captura de Calificaciones', route: '/captura-calificaciones' },
@@ -102,9 +101,9 @@ export default {
     ]
 
     const directLinks = {
-      'catalogos': '/catalogos',
-      'impresiones': '/impresiones',
-      'utilerias': '/utilerias'
+      'catalogos': '/operaciones',      // Cambiado de '/catalogos'
+  'impresiones': '/impresiones',    // Cambiado de '/catalogos/impresiones'  
+  'utilerias': '/utilerias'   
     }
 
     const activeModule = computed(() => store.getters.getActiveModule)

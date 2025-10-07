@@ -1,234 +1,144 @@
 <template>
   <div class="consultas-container">
-    <!-- Header Principal -->
-    <div class="header">
+    <!-- Header dinámico según la ruta -->
+    <div class="page-header">
       <h1>Consultas</h1>
-      <h2>Consulta por Alumno</h2>
-      <p>Consulta de Grupos</p>
+      <h2>{{ currentSubmoduleTitle }}</h2>
+      <p>{{ currentSubmoduleDescription }}</p>
     </div>
 
-    <div class="content-grid">
-      <!-- Columna Izquierda - Catálogos y Operaciones -->
-      <div class="left-column">
-        <!-- Catálogos -->
-        <div class="section-card">
-          <h3>Catálogos</h3>
-          <div class="input-group">
-            <label>No. de Control o Nombre</label>
-            <input type="text" class="input-field" v-model="busquedaAlumno">
-          </div>
-        </div>
-
-        <!-- Operaciones -->
-        <div class="section-card">
-          <h3>Operaciones</h3>
-          <div class="input-group">
-            <label>Nombre del Alumno:</label>
-            <input type="text" class="input-field" v-model="nombreAlumno" readonly>
-          </div>
-        </div>
-
-        <!-- Impresiones -->
-        <div class="section-card">
-          <h3>Impresiones</h3>
-          <div class="input-group">
-            <label>Status del alumno:</label>
-            <input type="text" class="input-field" value="Activo" readonly>
-          </div>
-        </div>
-
-        <!-- Utilerías -->
-        <div class="section-card">
-          <h3>Utilerías</h3>
-          <div class="input-group">
-            <label>Semestre actual:</label>
-            <input type="text" class="input-field" value="Noveno" readonly>
-          </div>
-          <div class="input-group">
-            <label>Tabuador de pago:</label>
-            <input type="text" class="input-field" placeholder="_____">
-          </div>
-        </div>
+    <!-- Navegación de módulos -->
+    <div class="modules-nav">
+      <div 
+        class="nav-item" 
+        :class="{ active: currentView === 'alumno' }"
+        @click="changeView('alumno')"
+      >
+        Consulta por Alumno
       </div>
+      <div 
+        class="nav-item" 
+        :class="{ active: currentView === 'grupos' }"
+        @click="changeView('grupos')"
+      >
+        Consulta de Grupos
+      </div>
+      <div 
+        class="nav-item" 
+        :class="{ active: currentView === 'alumnos-grupo' }"
+        @click="changeView('alumnos-grupo')"
+      >
+        Alumnos por Grupo
+      </div>
+      <div 
+        class="nav-item" 
+        :class="{ active: currentView === 'resumen-grupos' }"
+        @click="changeView('resumen-grupos')"
+      >
+        Resumen de grupos
+      </div>
+    </div>
 
-      <!-- Columna Derecha - Cardex y Grupos -->
-      <div class="right-column">
-        <!-- Cardex del Alumno -->
-        <div class="section-card">
-          <h3>Cardex del Alumno</h3>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>cal_mod</th>
-                <th>cal_cal</th>
-                <th>cal_acr</th>
-                <th>cal_per</th>
-                <th>cal_m_o</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in cardexData" :key="index">
-                <td>{{ item.cal_mod }}</td>
-                <td>{{ item.cal_cal }}</td>
-                <td>{{ item.cal_acr }}</td>
-                <td>{{ item.cal_per }}</td>
-                <td>{{ item.cal_m_o }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <!-- Contenido dinámico según la vista -->
+    <div v-if="currentView === 'alumno' || currentView === 'grupos'">
+      <!-- Contenido que ya tienes para Consulta por Alumno -->
+      <div class="content-grid">
+        <!-- ... (tu contenido actual de consultas) ... -->
+      </div>
+    </div>
 
-        <!-- Alumnos por Grupo -->
-        <div class="section-card">
-          <h3>Alumnos por Grupo</h3>
-          <p>Resumen de grupos</p>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>grup_mod</th>
-                <th>grup_cgr</th>
-                <th>grup_can</th>
-                <th>grup_i</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(grupo, index) in gruposData" :key="index">
-                <td>{{ grupo.grup_mod }}</td>
-                <td>{{ grupo.grup_cgr }}</td>
-                <td>{{ grupo.grup_can }}</td>
-                <td>{{ grupo.grup_i }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <div v-else-if="currentView === 'alumnos-grupo'">
+      <!-- Contenido específico para Alumnos por Grupo -->
+      <div class="section-card">
+        <h3 class="section-title">Alumnos por Grupo</h3>
+        <p class="section-subtitle">Resumen de grupos</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>grup_mod</th>
+              <th>grup_cgr</th>
+              <th>grup_can</th>
+              <th>grup_i</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(grupo, index) in gruposData" :key="index">
+              <td><input type="text" v-model="grupo.grup_mod" class="table-input"></td>
+              <td><input type="text" v-model="grupo.grup_cgr" class="table-input"></td>
+              <td><input type="text" v-model="grupo.grup_can" class="table-input"></td>
+              <td><input type="text" v-model="grupo.grup_i" class="table-input"></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar-fila" @click="agregarFilaGrupo">+ Agregar Fila</button>
+      </div>
+    </div>
+
+    <div v-else-if="currentView === 'resumen-grupos'">
+      <!-- Contenido específico para Resumen de Grupos -->
+      <div class="section-card">
+        <h3 class="section-title">Resumen de Grupos</h3>
+        <p>Contenido específico para resumen de grupos...</p>
+        <!-- Aquí puedes agregar la tabla o contenido específico -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+
 export default {
   name: 'Consultas',
-  data() {
+  setup() {
+    const route = useRoute()
+    const currentView = ref('alumno')
+
+    // Mapeo de rutas a vistas
+    const routeToViewMap = {
+      '/consultas': 'alumno',
+      '/consultas-alumno': 'alumno',
+      '/consultas-grupos': 'grupos',
+      '/alumnos-grupo': 'alumnos-grupo',
+      '/resumen-grupos': 'resumen-grupos'
+    }
+
+    // Títulos dinámicos según la vista
+    const viewTitles = {
+      'alumno': { title: 'Consulta por Alumno', desc: 'Consulta de Grupos' },
+      'grupos': { title: 'Consulta de Grupos', desc: 'Consulta por Alumno' },
+      'alumnos-grupo': { title: 'Alumnos por Grupo', desc: 'Resumen de grupos' },
+      'resumen-grupos': { title: 'Resumen de Grupos', desc: 'Resumen general' }
+    }
+
+    const currentSubmoduleTitle = computed(() => 
+      viewTitles[currentView.value]?.title || 'Consultas'
+    )
+    
+    const currentSubmoduleDescription = computed(() => 
+      viewTitles[currentView.value]?.desc || ''
+    )
+
+    const changeView = (view) => {
+      currentView.value = view
+    }
+
+    // Detectar la ruta actual al cargar el componente
+    onMounted(() => {
+      const currentPath = route.path
+      currentView.value = routeToViewMap[currentPath] || 'alumno'
+    })
+
+    // ... (el resto de tu data y methods actuales)
+
     return {
-      busquedaAlumno: '',
-      nombreAlumno: 'Daniela Quiroz',
-      cardexData: [
-        { cal_mod: 11, cal_cal: 90, cal_acr: 4044, cal_per: 2015, cal_m_o: '' },
-        { cal_mod: 12, cal_cal: 60, cal_acr: 4044, cal_per: 2015, cal_m_o: '' },
-        { cal_mod: 13, cal_cal: 50, cal_acr: 4044, cal_per: 2015, cal_m_o: '' },
-        { cal_mod: 14, cal_cal: 60, cal_acr: 4044, cal_per: 2015, cal_m_o: '' }
-      ],
-      gruposData: [
-        { grup_mod: '', grup_cgr: '', grup_can: '', grup_i: '' }
-      ]
+      currentView,
+      currentSubmoduleTitle,
+      currentSubmoduleDescription,
+      changeView,
+      // ... (el resto de tus returns)
     }
   }
 }
 </script>
-
-<style scoped>
-.consultas-container {
-  padding: 20px;
-  background-color: #F5F7FA;
-  min-height: 100vh;
-}
-
-.header {
-  margin-bottom: 30px;
-}
-
-.header h1 {
-  color: #1B396A;
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.header h2 {
-  color: #2E4D88;
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-.header p {
-  color: #6B7280;
-  font-size: 14px;
-}
-
-.content-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.section-card {
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.section-card h3 {
-  color: #1B396A;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-bottom: 1px solid #D1D5DB;
-  padding-bottom: 8px;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  color: #6B7280;
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-
-.input-field {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #D1D5DB;
-  border-radius: 4px;
-  background-color: #FFFFFF;
-}
-
-.input-field:read-only {
-  background-color: #F5F7FA;
-  color: #6B7280;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.data-table th,
-.data-table td {
-  border: 1px solid #D1D5DB;
-  padding: 8px 12px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.data-table th {
-  background-color: #1B396A;
-  color: #FFFFFF;
-  font-weight: 600;
-}
-
-.data-table td {
-  background-color: #FFFFFF;
-  color: #000000;
-}
-
-@media (max-width: 768px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

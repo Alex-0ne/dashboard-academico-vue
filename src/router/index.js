@@ -2,12 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Consultas from '../views/Consultas.vue'
 import Inscripcion from '../views/Inscripcion.vue'
-import Adeudos from '../components/Inscripcion/Adeudos.vue'
-import Operaciones from '../components/Catalogos/Operaciones.vue'
-import Impresiones from '../components/Catalogos/Impresiones.vue'
-import Utilerias from '../components/Catalogos/Utilerias.vue'
-import CambioGrupoIndividual from '../components/Inscripcion/CambioGrupoIndividual.vue'
-import FusionarGrupos from '../components/Inscripcion/FusionarGrupos.vue'
 
 const routes = [
   {
@@ -16,44 +10,77 @@ const routes = [
     component: Dashboard
   },
   {
-  path: '/fusionar-grupos',
-  name: 'FusionarGrupos',
-  component: FusionarGrupos
-},
-  {
-  path: '/cambio-grupo-individual',
-  name: 'CambioGrupoIndividual',
-  component: CambioGrupoIndividual
-},
-  {
     path: '/consultas',
     name: 'Consultas',
     component: Consultas
+  },
+  // NUEVAS RUTAS DE CONSULTAS
+  {
+    path: '/consultas-alumno',
+    name: 'ConsultasAlumno',
+    component: () => import('../views/Consultas.vue')
+  },
+  {
+    path: '/consultas-grupos',
+    name: 'ConsultasGrupos',
+    component: () => import('../views/Consultas.vue')
+  },
+  {
+    path: '/alumnos-grupo',
+    name: 'AlumnosGrupo',
+    component: () => import('../views/Consultas.vue')
+  },
+  {
+    path: '/resumen-grupos',
+    name: 'ResumenGrupos',
+    component: () => import('../views/Consultas.vue')
   },
   {
     path: '/inscripcion',
     name: 'Inscripcion',
     component: Inscripcion
   },
+  // RUTAS DE INSCRIPCIÓN
   {
     path: '/adeudos',
     name: 'Adeudos',
-    component: Adeudos
+    component: () => import('../views/Adeudos.vue')
   },
   {
-    path: '/catalogos/operaciones',
+    path: '/cambio-grupo-individual',
+    name: 'CambioGrupoIndividual',
+    component: () => import('../views/CambioGrupoIndividual.vue')
+  },
+  {
+    path: '/captura-calificaciones',
+    name: 'CapturaCalificaciones',
+    component: () => import('../views/CapturaCalificaciones.vue')
+  },
+  {
+    path: '/fusionar-grupos',
+    name: 'FusionarGrupos',
+    component: () => import('../views/FusionarGrupos.vue')
+  },
+  {
+    path: '/imprimir-comprobante',
+    name: 'ImprimirComprobante',
+    component: () => import('../views/ImprimirComprobante.vue')
+  },
+  // RUTAS DE CATÁLOGOS
+  {
+    path: '/operaciones',
     name: 'Operaciones',
-    component: Operaciones
+    component: () => import('../views/Operaciones.vue')
   },
   {
-    path: '/catalogos/impresiones',
+    path: '/impresiones',
     name: 'Impresiones',
-    component: Impresiones
+    component: () => import('../views/Impresiones.vue')
   },
   {
-    path: '/catalogos/utilerias',
+    path: '/utilerias',
     name: 'Utilerias',
-    component: Utilerias
+    component: () => import('../views/Utilerias.vue')
   }
 ]
 
