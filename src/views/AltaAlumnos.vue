@@ -17,6 +17,7 @@ export default {
 
 <style scoped>
 .alta-alumnos-container {
+  
   padding: 20px;
   background-color: #F5F7FA;
   min-height: 100vh;
