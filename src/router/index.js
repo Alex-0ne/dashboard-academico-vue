@@ -9,42 +9,59 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard
   },
+  
+  // CATÁLOGOS
   {
-    path: '/consultas',
-    name: 'Consultas',
-    component: Consultas
-  },
-  // NUEVAS RUTAS DE CONSULTAS
-  {
-    path: '/consultas-alumno',
-    name: 'ConsultasAlumno',
-    component: () => import('../views/Consultas.vue')
+    path: '/plan-estudios',
+    name: 'PlanEstudios',
+    component: () => import('../views/PlanEstudios.vue')
   },
   {
-    path: '/consultas-grupos',
-    name: 'ConsultasGrupos',
-    component: () => import('../views/Consultas.vue')
+    path: '/alta-alumnos',
+    name: 'AltaAlumnos',
+    component: () => import('../views/AltaAlumnos.vue')
   },
   {
-    path: '/alumnos-grupo',
-    name: 'AlumnosGrupo',
-    component: () => import('../views/Consultas.vue')
+    path: '/datos-personales',
+    name: 'DatosPersonales',
+    component: () => import('../views/DatosPersonales.vue')
   },
   {
-    path: '/resumen-grupos',
-    name: 'ResumenGrupos',
-    component: () => import('../views/Consultas.vue')
+    path: '/reticula',
+    name: 'Reticula',
+    component: () => import('../views/Reticula.vue')
   },
+  {
+    path: '/cardex-directo',
+    name: 'CardexDirecto',
+    component: () => import('../views/CardexDirecto.vue')
+  },
+  {
+    path: '/gestion-catedraticos',
+    name: 'GestionCatedraticos',
+    component: () => import('../views/GestionCatedraticos.vue')
+  },
+  {
+    path: '/gestion-grupos',
+    name: 'GestionGrupos',
+    component: () => import('../views/GestionGrupos.vue')
+  },
+  {
+    path: '/consultar',
+    name: 'Consultar',
+    component: () => import('../views/Consultar.vue')
+  },
+  
+  // OPERACIONES
   {
     path: '/inscripcion',
     name: 'Inscripcion',
     component: Inscripcion
   },
-  // RUTAS DE INSCRIPCIÓN
   {
-    path: '/adeudos',
-    name: 'Adeudos',
-    component: () => import('../views/Adeudos.vue')
+    path: '/imprimir-comprobante',
+    name: 'ImprimirComprobante',
+    component: () => import('../views/ImprimirComprobante.vue')
   },
   {
     path: '/cambio-grupo-individual',
@@ -57,30 +74,48 @@ const routes = [
     component: () => import('../views/CapturaCalificaciones.vue')
   },
   {
-    path: '/fusionar-grupos',
-    name: 'FusionarGrupos',
-    component: () => import('../views/FusionarGrupos.vue')
+    path: '/adeudos',
+    name: 'Adeudos',
+    component: () => import('../views/Adeudos.vue')
+  },
+  
+  // CONSULTAS
+  {
+    path: '/calificaciones-alumnos',
+    name: 'CalificacionesAlumnos',
+    component: () => import('../views/CalificacionesAlumnos.vue')
   },
   {
-    path: '/imprimir-comprobante',
-    name: 'ImprimirComprobante',
-    component: () => import('../views/ImprimirComprobante.vue')
-  },
-  // RUTAS DE CATÁLOGOS
-  {
-    path: '/operaciones',
-    name: 'Operaciones',
-    component: () => import('../views/Operaciones.vue')
+    path: '/cupo-grupos',
+    name: 'CupoGrupos',
+    component: () => import('../views/CupoGrupos.vue')
   },
   {
-    path: '/impresiones',
-    name: 'Impresiones',
-    component: () => import('../views/Impresiones.vue')
+    path: '/consultas',
+    name: 'Consultas',
+    component: Consultas
+  },
+  
+  // IMPRESIÓN
+  {
+    path: '/lista-asistencia',
+    name: 'ListaAsistencia',
+    component: () => import('../views/ListaAsistencia.vue')
   },
   {
-    path: '/utilerias',
-    name: 'Utilerias',
-    component: () => import('../views/Utilerias.vue')
+    path: '/lista-evaluacion',
+    name: 'ListaEvaluacion',
+    component: () => import('../views/ListaEvaluacion.vue')
+  },
+  {
+    path: '/impresion-grupos',
+    name: 'ImpresionGrupos',
+    component: () => import('../views/ImpresionGrupos.vue')
+  },
+  {
+    path: '/impresion-recibos',
+    name: 'ImpresionRecibos',
+    component: () => import('../views/ImpresionRecibos.vue')
   }
 ]
 

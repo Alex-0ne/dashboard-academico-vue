@@ -5,16 +5,16 @@
     </div>
     
     <ul class="sidebar-menu">
-      <!-- CONSULTAS - Con submenú -->
+      <!-- CATÁLOGOS - Con submenú -->
       <li 
         class="sidebar-menu-item"
-        :class="{ active: activeModule === 'consultas' }"
-        @click="toggleModule('consultas')"
+        :class="{ active: activeModule === 'catalogos' }"
+        @click="toggleModule('catalogos')"
       >
-        Consultas
-        <ul v-if="activeModule === 'consultas'" class="sidebar-submenu">
+        Catálogos
+        <ul v-if="activeModule === 'catalogos'" class="sidebar-submenu">
           <li 
-            v-for="subitem in consultasSubmenu" 
+            v-for="subitem in catalogosSubmenu" 
             :key="subitem.id"
             :class="['sidebar-submenu-item', { active: activeSubmodule === subitem.id }]"
             @click.stop="navigateToSubmodule(subitem)"
@@ -43,31 +43,42 @@
         </ul>
       </li>
 
-      <!-- CATÁLOGOS - Botón directo -->
+      <!-- CONSULTAS - Con submenú -->
       <li 
-        class="sidebar-menu-item direct-link"
-        :class="{ active: activeModule === 'catalogos' }"
-        @click="navigateDirect('catalogos')"
+        class="sidebar-menu-item"
+        :class="{ active: activeModule === 'consultas' }"
+        @click="toggleModule('consultas')"
       >
-        Catálogos
+        Consultas
+        <ul v-if="activeModule === 'consultas'" class="sidebar-submenu">
+          <li 
+            v-for="subitem in consultasSubmenu" 
+            :key="subitem.id"
+            :class="['sidebar-submenu-item', { active: activeSubmodule === subitem.id }]"
+            @click.stop="navigateToSubmodule(subitem)"
+          >
+            {{ subitem.name }}
+          </li>
+        </ul>
       </li>
 
-      <!-- IMPRESIONES - Botón directo -->
+      <!-- IMPRESIÓN - Con submenú -->
       <li 
-        class="sidebar-menu-item direct-link"
-        :class="{ active: activeModule === 'impresiones' }"
-        @click="navigateDirect('impresiones')"
+        class="sidebar-menu-item"
+        :class="{ active: activeModule === 'impresion' }"
+        @click="toggleModule('impresion')"
       >
-        Impresiones
-      </li>
-
-      <!-- UTILERÍAS - Botón directo -->
-      <li 
-        class="sidebar-menu-item direct-link"
-        :class="{ active: activeModule === 'utilerias' }"
-        @click="navigateDirect('utilerias')"
-      >
-        Utilerías
+        Impresión
+        <ul v-if="activeModule === 'impresion'" class="sidebar-submenu">
+          <li 
+            v-for="subitem in impresionSubmenu" 
+            :key="subitem.id"
+            :class="['sidebar-submenu-item', { active: activeSubmodule === subitem.id }]"
+            @click.stop="navigateToSubmodule(subitem)"
+          >
+            {{ subitem.name }}
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -84,27 +95,36 @@ export default {
     const store = useStore()
     const router = useRouter()
 
-    const consultasSubmenu = [
-      { id: 'consulta-alumno', name: 'Consultar por Alumno', route: '/consultas-alumno' },
-      { id: 'consulta-grupos', name: 'Consultar por Grupos', route: '/consultas-grupos' },
-      { id: 'alumnos-grupo', name: 'Alumnos por Grupo', route: '/alumnos-grupo' },
-      { id: 'resumen-grupos', name: 'Resumen de Grupos', route: '/resumen-grupos' }
+    const catalogosSubmenu = [
+      { id: 'plan-estudios', name: 'Plan de Estudios', route: '/plan-estudios' },
+      { id: 'alta-alumnos', name: 'Alta de alumnos', route: '/alta-alumnos' },
+      { id: 'datos-personales', name: 'Alta de datos Personales de alumnos', route: '/datos-personales' },
+      { id: 'reticula', name: 'Retícula', route: '/reticula' },
+      { id: 'cardex-directo', name: 'Cardex Directo', route: '/cardex-directo' },
+      { id: 'catedraticos', name: 'Catedráticos', route: '/gestion-catedraticos' },
+      { id: 'grupos', name: 'Grupos', route: '/gestion-grupos' },
+      { id: 'consultar', name: 'Consultar', route: '/consultar' }
     ]
 
     const operacionesSubmenu = [
       { id: 'inscripcion', name: 'Inscripción', route: '/inscripcion' },
-      { id: 'adeudos', name: 'Adeudos', route: '/adeudos' },
-      { id: 'cambio-grupo-individual', name: 'Cambio de Grupo Individual', route: '/cambio-grupo-individual' },
-      { id: 'fusionar-grupos', name: 'Fusionar Grupos', route: '/fusionar-grupos' },
+      { id: 'imprimir-comprobante', name: 'Imprimir comprobante de Inscripción', route: '/imprimir-comprobante' },
+      { id: 'cambiar-grupo', name: 'Cambiar de grupo', route: '/cambio-grupo-individual' },
       { id: 'captura-calificaciones', name: 'Captura de Calificaciones', route: '/captura-calificaciones' },
-      { id: 'imprimir-comprobante', name: 'Imprimir Comprobante', route: '/imprimir-comprobante' }
+      { id: 'administrar-adeudos', name: 'Admón. de Adeudos', route: '/adeudos' }
     ]
 
-    const directLinks = {
-      'catalogos': '/operaciones',      // Cambiado de '/catalogos'
-  'impresiones': '/impresiones',    // Cambiado de '/catalogos/impresiones'  
-  'utilerias': '/utilerias'   
-    }
+    const consultasSubmenu = [
+      { id: 'calificaciones-alumnos', name: 'Calificaciones de alumnos', route: '/calificaciones-alumnos' },
+      { id: 'cupo-grupos', name: 'Cupo de los grupos', route: '/cupo-grupos' }
+    ]
+
+    const impresionSubmenu = [
+      { id: 'lista-asistencia', name: 'Lista de Asistencia', route: '/lista-asistencia' },
+      { id: 'lista-evaluacion', name: 'Lista de evaluación', route: '/lista-evaluacion' },
+      { id: 'impresion-grupos', name: 'Impresión de llenado de grupos', route: '/impresion-grupos' },
+      { id: 'impresion-recibos', name: 'Impresión de recibos', route: '/impresion-recibos' }
+    ]
 
     const activeModule = computed(() => store.getters.getActiveModule)
     const activeSubmodule = computed(() => store.getters.getActiveSubmodule)
@@ -124,22 +144,15 @@ export default {
       }
     }
 
-    const navigateDirect = (moduleId) => {
-      store.dispatch('changeModule', moduleId)
-      store.dispatch('changeSubmodule', '')
-      if (directLinks[moduleId]) {
-        router.push(directLinks[moduleId])
-      }
-    }
-
     return {
-      consultasSubmenu,
+      catalogosSubmenu,
       operacionesSubmenu,
+      consultasSubmenu,
+      impresionSubmenu,
       activeModule,
       activeSubmodule,
       toggleModule,
-      navigateToSubmodule,
-      navigateDirect
+      navigateToSubmodule
     }
   }
 }
@@ -191,13 +204,6 @@ export default {
 .sidebar-menu-item.active {
   background-color: #2E4D88;
   border-left-color: #BFA975;
-}
-
-.sidebar-menu-item.direct-link::after {
-  content: "→";
-  position: absolute;
-  right: 20px;
-  opacity: 0.7;
 }
 
 .sidebar-submenu {
